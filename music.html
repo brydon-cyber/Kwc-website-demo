@@ -1,0 +1,280 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Music · the King will come</title>
+<meta name="description" content="Songs from the kitchen table: studio and live releases from the King will come.">
+<meta name="theme-color" content="#000000">
+<link rel="icon" type="image/png" href="assets/logo/lily-charcoal.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Mona+Sans:wdth,wght@75..125,200..900&family=DM+Serif+Display:ital@0;1&family=Caveat+Brush&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+<script>tailwind.config = { corePlugins: { preflight: false } }</script>
+<link rel="stylesheet" href="assets/site.css">
+<style>
+  /* featured release */
+  .feat { display: grid; grid-template-columns: 1fr 40rem; gap: 6rem; align-items: center; padding: 12rem 6rem 10rem; }
+  .feat h1 { line-height: .84; margin: 2rem 0 3rem; }
+  .feat h1 .sans-x { display: block; font-size: 7rem; font-weight: 800; }
+  .feat h1 .serif { display: block; font-size: 7.2rem; text-transform: uppercase; color: var(--kwc-tan); line-height: .9; }
+  .feat .now { display: flex; align-items: center; gap: 1rem; padding: 1.4rem 0; border-top: 1px solid rgb(250 249 246 / .16); border-bottom: 1px solid rgb(250 249 246 / .16); margin-bottom: 2.4rem; }
+  .feat .now .t { font-family: var(--serif); font-size: 2.2rem; line-height: 1; }
+  .feat .now .s { font-size: 1rem; color: var(--kwc-denim); margin-top: .35rem; }
+  .eq { display: flex; gap: .22rem; align-items: flex-end; height: 2rem; margin-left: auto; }
+  .eq i { width: .3rem; height: 100%; background: var(--kwc-tan); border-radius: 1rem; transform-origin: bottom; animation: eq 1.1s ease-in-out infinite; }
+  .eq i:nth-child(2) { animation-delay: -.4s; } .eq i:nth-child(3) { animation-delay: -.8s; } .eq i:nth-child(4) { animation-delay: -.2s; }
+  @keyframes eq { 0%, 100% { transform: scaleY(.25); } 50% { transform: scaleY(1); } }
+  .plats { display: flex; flex-wrap: wrap; gap: .7rem; }
+  .plats .btn-ghost { color: var(--kwc-lightgrey); }
+  .feat-cover { position: relative; aspect-ratio: 1; }
+  .feat-cover .disc { position: absolute; top: 4%; right: -14%; width: 92%; aspect-ratio: 1; border-radius: 50%; background: radial-gradient(circle, var(--kwc-tan) 0 7%, var(--kwc-black) 7.5% 16%, #1a1919 16.5% 100%); box-shadow: inset 0 0 0 1px rgb(250 249 246 / .08); animation: spin 9s linear infinite; }
+  .feat-cover .disc::after { content: ""; position: absolute; inset: 22%; border-radius: 50%; box-shadow: 0 0 0 1px rgb(250 249 246 / .06), 0 0 0 1.4rem rgb(0 0 0 / 0), 0 0 0 1.5rem rgb(250 249 246 / .05), 0 0 0 3rem rgb(0 0 0 / 0), 0 0 0 3.1rem rgb(250 249 246 / .05); }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .feat-cover img { position: relative; width: 100%; height: 100%; object-fit: cover; border-radius: .6rem; box-shadow: 0 2rem 4rem -1rem rgb(0 0 0 / .7); }
+
+  /* discography */
+  .disco { padding: 9rem 1.25rem 10rem; }
+  .disco-hd { display: flex; justify-content: space-between; align-items: end; gap: 2rem; margin-bottom: 5rem; }
+  .disco-hd h2 { line-height: .86; }
+  .disco-hd h2 .sans-x { display: block; font-size: 6rem; font-weight: 800; }
+  .disco-hd h2 .serif { display: block; font-size: 6.4rem; text-transform: uppercase; color: var(--kwc-tan); }
+  .tabs { display: flex; gap: .5rem; padding: .35rem; border-radius: .8rem; box-shadow: inset 0 0 0 1px rgb(250 249 246 / .2); }
+  .tab { position: relative; height: 3rem; padding: 0 1.3rem; border-radius: .55rem; font: 700 1rem/1 var(--sans); font-stretch: 78%; text-transform: uppercase; color: var(--kwc-denim); transition: transform .3s var(--cubic-default); }
+  .tab::before { content: ""; position: absolute; inset: 0; z-index: -1; border-radius: inherit; background: var(--kwc-lightgrey); opacity: 0; transition: opacity .3s ease; }
+  .tab { isolation: isolate; }
+  .tab:hover::before { opacity: .1; }
+  .tab[aria-selected="true"] { color: var(--kwc-black); }
+  .tab[aria-selected="true"]::before { opacity: 1; }
+  .tab:active { transform: scale(.95); }
+  .grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.4rem; }
+  .rel { position: relative; display: block; aspect-ratio: 338 / 380; transition: opacity .4s ease, transform .6s var(--cubic-default); }
+  .rel.hide { display: none; }
+  .rel svg.shape { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+  .rel svg.shape path { fill: transparent; stroke: rgb(250 249 246 / .3); stroke-width: 1.2; vector-effect: non-scaling-stroke; transition: stroke .4s ease; }
+  .rel:hover svg.shape path, .rel:focus-visible svg.shape path { stroke: var(--kwc-tan); }
+  .rel .cover { position: absolute; left: 50%; top: 40%; width: 64%; aspect-ratio: 1; transform: translate(-50%, -50%) rotate(-3deg); box-shadow: 0 1.2rem 2.4rem rgb(0 0 0 / .55); transition: transform var(--animation-default); }
+  .rel:nth-child(even) .cover { transform: translate(-50%, -50%) rotate(3deg); }
+  .rel:hover .cover, .rel:focus-visible .cover { transform: translate(-50%, -54%) rotate(0deg) scale(1.05); }
+  .rel:active .cover { transform: translate(-50%, -50%) scale(.98); transition-duration: .15s; }
+  .rel .cover img { width: 100%; height: 100%; object-fit: cover; }
+  .rel .info { position: absolute; left: 1.4rem; right: 1.4rem; bottom: 1.1rem; display: flex; justify-content: space-between; align-items: end; gap: 1rem; }
+  .rel .info b { display: block; font-family: var(--serif); font-weight: 400; font-size: 1.6rem; line-height: 1.05; }
+  .rel .info em { font-style: normal; font-size: .85rem; color: var(--kwc-tan); text-transform: uppercase; font-weight: 650; }
+  .rel .info .go { flex-shrink: 0; width: 2.6rem; height: 2.6rem; border-radius: .5rem; display: grid; place-items: center; background: var(--kwc-rust); transform: scale(.8); opacity: .0; transition: transform .5s var(--cubic-default), opacity .3s ease; }
+  .rel:hover .info .go, .rel:focus-visible .info .go { transform: none; opacity: 1; }
+  .rel .info .go svg { width: 1rem; height: 1rem; }
+
+  /* sessions */
+  .sess { display: grid; grid-template-columns: 30rem 1fr; gap: 4rem; padding: 10rem 1.25rem; align-items: start; }
+  .sess h2 { line-height: .86; margin-bottom: 2rem; }
+  .sess h2 .sans-x { display: block; font-size: 5.4rem; font-weight: 800; }
+  .sess h2 .serif { display: block; font-size: 5.8rem; text-transform: uppercase; }
+  .sess p { font-size: 1.4rem; line-height: 1.3; }
+  .strip { display: grid; grid-template-columns: 1.4fr 1fr 1fr; gap: 1rem; }
+  .strip figure { border-radius: 1.4rem; overflow: hidden; height: 38rem; }
+  .strip figure:nth-child(2) { margin-top: 5rem; height: 33rem; }
+  .strip figure:nth-child(3) { margin-top: 10rem; height: 28rem; }
+  .strip img { width: 100%; height: 100%; object-fit: cover; transition: transform 1.2s var(--cubic-default); }
+  .strip figure:hover img { transform: scale(1.04); }
+
+  /* listen everywhere */
+  .every { padding: 9rem 1.25rem 4rem; text-align: center; }
+  .every .eyebrow { font-size: .9rem; color: var(--kwc-charcoal); opacity: .7; }
+  .every ul { list-style: none; margin-top: 2.4rem; }
+  .every li a { display: inline-flex; align-items: center; gap: 1.2rem; font-size: 7rem; line-height: 1.02; transition: transform var(--animation-default); }
+  .every li a svg { width: 3.4rem; height: 3.4rem; opacity: 0; transform: translateX(-1rem); transition: opacity .3s ease, transform var(--animation-default); color: var(--kwc-tan); }
+  .every li a:hover { color: var(--kwc-tan); }
+  .every li a:hover svg { opacity: 1; transform: none; }
+  .every li a:active { transform: scale(.98); }
+
+  @media (max-width: 767px) {
+    .feat { grid-template-columns: 1fr; gap: 4rem; padding: 10rem 1.6rem 7rem; }
+    .feat h1 .sans-x { font-size: 6rem; } .feat h1 .serif { font-size: 6.2rem; }
+    .feat .now .t { font-size: 2.4rem; } .feat .now .s { font-size: 1.2rem; }
+    .feat-cover { width: 80%; }
+    .disco { padding: 7rem 1.6rem; }
+    .disco-hd { flex-direction: column; align-items: start; }
+    .disco-hd h2 .sans-x { font-size: 4.8rem; } .disco-hd h2 .serif { font-size: 5rem; }
+    .tab { height: 3.8rem; font-size: 1.3rem; }
+    .grid { grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .rel .info b { font-size: 1.5rem; } .rel .info em { font-size: 1rem; }
+    .rel .info .go { display: none; }
+    .sess { grid-template-columns: 1fr; padding: 7rem 1.6rem; }
+    .sess h2 .sans-x { font-size: 4.8rem; } .sess h2 .serif { font-size: 5rem; }
+    .sess p { font-size: 1.6rem; }
+    .strip { grid-template-columns: 1fr 1fr; }
+    .strip figure { height: 24rem !important; margin-top: 0 !important; }
+    .strip figure:first-child { grid-column: 1 / -1; }
+    .every li a { font-size: 4.6rem; }
+    .every .eyebrow { font-size: 1.1rem; }
+  }
+  @media (prefers-reduced-motion: reduce) { .eq i, .feat-cover .disc { animation: none; } }
+</style>
+</head>
+<body>
+
+<header class="nav" id="nav" data-on="dark">
+  <a href="index.html" class="nav-logo" aria-label="the King will come, home">
+    <img class="d" src="assets/logo/stacked-charcoal.png" alt="the King will come">
+    <img class="l" src="assets/logo/stacked-lightgrey.png" alt="" aria-hidden="true">
+  </a>
+  <div class="nav-right">
+    <a class="btn-accent" href="index.html#store">
+      <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M4 7h12l-1 10H5L4 7Z"/><path d="M7 7V5.5a3 3 0 0 1 6 0V7"/></svg>
+      Store
+    </a>
+    <button class="menu-btn" id="menuBtn" aria-label="Open menu" aria-expanded="false" aria-controls="menu"><i></i><i></i></button>
+  </div>
+</header>
+<nav class="menu" id="menu" aria-label="Main">
+  <a class="sans-x" href="index.html">Home</a>
+  <a class="sans-x" href="about.html">About</a>
+  <a class="sans-x" href="music.html" aria-current="page">Music</a>
+  <a class="sans-x" href="contact.html">Contact</a>
+  <a class="sans-x accent" href="index.html#store">Store</a>
+</nav>
+
+<main>
+
+<!-- featured -->
+<section class="section black" data-theme="dark">
+  <svg class="topo" data-topo="10" data-seed="301" aria-hidden="true"></svg>
+  <div class="feat">
+    <div>
+      <p class="eyebrow rv" style="color:var(--kwc-tan); font-size:.9rem">Music · Featured release</p>
+      <h1 class="rv" style="--d:.08s"><span class="sans-x">Songs from</span><span class="serif">the kitchen table</span></h1>
+      <div class="now rv" style="--d:.16s">
+        <div><div class="t">know You better</div><div class="s">Live from the kitchen table</div></div>
+        <div class="eq" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+      </div>
+      <div class="plats rv" style="--d:.22s">
+        <a class="btn-accent" href="#">Spotify
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M5 11 11 5M6 5h5v5"/></svg></a>
+        <a class="btn-ghost" href="#">Apple Music</a>
+        <a class="btn-ghost" href="#">YouTube</a>
+      </div>
+    </div>
+    <div class="feat-cover rv" style="--d:.15s">
+      <div class="disc" aria-hidden="true"></div>
+      <img src="assets/img/r-kyb-live.jpg" alt="Album artwork for know You better, live from the kitchen table">
+    </div>
+  </div>
+</section>
+
+<!-- discography -->
+<section class="section dark disco" data-theme="dark">
+  <svg class="topo" data-topo="10" data-seed="317" aria-hidden="true"></svg>
+  <div class="disco-hd">
+    <h2 class="rv"><span class="sans-x">All</span><span class="serif">releases</span></h2>
+    <div class="tabs rv" role="tablist" aria-label="Filter releases">
+      <button class="tab" role="tab" aria-selected="true" data-f="all">All</button>
+      <button class="tab" role="tab" aria-selected="false" data-f="studio">Studio</button>
+      <button class="tab" role="tab" aria-selected="false" data-f="live">Live</button>
+    </div>
+  </div>
+  <div class="grid" id="grid">
+    <a class="rel rv" href="#" data-kind="studio">
+      <svg class="shape" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"><path d="M1.5 0 H98.5 Q100 0 100 1.5 V98.5 Q100 100 98.5 100 H1.5 Q0 100 0 98.5 V1.5 Q0 0 1.5 0 Z"/></svg>
+      <div class="cover"><img src="assets/img/r-kyb.jpg" alt="Album artwork for know You better" loading="lazy"></div>
+      <div class="info"><div><b>know You better</b><em>Studio</em></div><span class="go" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M5 11 11 5M6 5h5v5"/></svg></span></div>
+    </a>
+    <a class="rel rv" href="#" data-kind="live" style="--d:.06s">
+      <svg class="shape" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"><path d="M1.5 0 H98.5 Q100 0 100 1.5 V98.5 Q100 100 98.5 100 H1.5 Q0 100 0 98.5 V1.5 Q0 0 1.5 0 Z"/></svg>
+      <div class="cover"><img src="assets/img/r-kyb-live.jpg" alt="Album artwork for know You better, live from the kitchen table" loading="lazy"></div>
+      <div class="info"><div><b>know You better</b><em>Live from the kitchen table</em></div><span class="go" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M5 11 11 5M6 5h5v5"/></svg></span></div>
+    </a>
+    <a class="rel rv" href="#" data-kind="studio" style="--d:.12s">
+      <svg class="shape" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"><path d="M1.5 0 H98.5 Q100 0 100 1.5 V98.5 Q100 100 98.5 100 H1.5 Q0 100 0 98.5 V1.5 Q0 0 1.5 0 Z"/></svg>
+      <div class="cover"><img src="assets/img/r-yet.jpg" alt="Album artwork for yet (don’t give up)" loading="lazy"></div>
+      <div class="info"><div><b>yet (don’t give up)</b><em>Studio</em></div><span class="go" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M5 11 11 5M6 5h5v5"/></svg></span></div>
+    </a>
+    <a class="rel rv" href="#" data-kind="live" style="--d:.18s">
+      <svg class="shape" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"><path d="M1.5 0 H98.5 Q100 0 100 1.5 V98.5 Q100 100 98.5 100 H1.5 Q0 100 0 98.5 V1.5 Q0 0 1.5 0 Z"/></svg>
+      <div class="cover"><img src="assets/img/r-yet-live.jpg" alt="Album artwork for yet (don’t give up), live from the kitchen table" loading="lazy"></div>
+      <div class="info"><div><b>yet (don’t give up)</b><em>Live from the kitchen table</em></div><span class="go" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M5 11 11 5M6 5h5v5"/></svg></span></div>
+    </a>
+  </div>
+</section>
+
+<!-- sessions -->
+<section class="section light" data-theme="light">
+  <svg class="topo" data-topo="10" data-seed="331" aria-hidden="true"></svg>
+  <div class="sess">
+    <div>
+      <p class="eyebrow rv" style="font-size:.9rem; margin-bottom:2rem">The sessions</p>
+      <h2 class="rv" style="--d:.08s"><span class="sans-x">Live from</span><span class="serif">the table</span></h2>
+      <p class="rv" style="--d:.16s">The live versions were sung around one kitchen table, with everybody in the room. Pull up a chair and listen in.</p>
+    </div>
+    <div class="strip">
+      <figure class="rv"><img src="assets/img/g-table.jpg" alt="Musicians in matching denim singing around a kitchen table" loading="lazy"></figure>
+      <figure class="rv" style="--d:.08s"><img src="assets/img/g-singers.jpg" alt="A singer and guitarist sharing a microphone" loading="lazy" style="object-position:35% 50%"></figure>
+      <figure class="rv" style="--d:.16s"><img src="assets/img/g-keys.jpg" alt="Hands playing a piano" loading="lazy"></figure>
+    </div>
+  </div>
+</section>
+
+<!-- listen everywhere -->
+<section class="section light every" data-theme="light">
+  <p class="eyebrow rv">Listen everywhere</p>
+  <ul>
+    <li class="rv"><a class="sans-x" href="#">Spotify<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M5 11 11 5M6 5h5v5"/></svg></a></li>
+    <li class="rv" style="--d:.05s"><a class="serif" href="#" style="text-transform:uppercase">Apple Music<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M5 11 11 5M6 5h5v5"/></svg></a></li>
+    <li class="rv" style="--d:.1s"><a class="sans-x" href="#">YouTube<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M5 11 11 5M6 5h5v5"/></svg></a></li>
+  </ul>
+</section>
+
+</main>
+
+<footer class="foot" data-theme="dark">
+  <div class="foot-card">
+    <svg class="topo" data-topo="12" data-seed="113" aria-hidden="true"></svg>
+    <img class="foot-lily" src="assets/logo/lily-tan.png" alt="" aria-hidden="true">
+    <h2 class="foot-h"><span class="sans-x">There’s always </span><span class="serif">room</span><br><span class="sans-x">at the </span><span class="serif">table</span><span class="sans-x">.</span></h2>
+    <div class="foot-col l">
+      <span class="eyebrow">Pages</span>
+      <a class="cond" href="index.html">Home</a>
+      <a class="cond" href="about.html">About</a>
+      <a class="cond" href="music.html" aria-current="page">Music</a>
+      <a class="cond" href="contact.html">Contact</a>
+      <a class="cond store-l" href="index.html#store">Store</a>
+    </div>
+    <div class="foot-col r">
+      <span class="eyebrow">Follow on</span>
+      <a class="cond" href="#">YouTube</a>
+      <a class="cond" href="#">Instagram</a>
+      <a class="cond" href="#">Spotify</a>
+      <a class="cond" href="#">TikTok</a>
+    </div>
+    <div class="foot-photo"><img src="assets/img/footer.jpg" alt="" loading="lazy"></div>
+    <div class="foot-logos logos" aria-hidden="true">
+      <div class="logos-track">
+        <div class="logos-set"><span class="lg l1">MUSIC</span><span class="lg l2">Content</span><span class="lg l3">Podcasts</span><span class="lg l4">Merch</span><span class="lg l5">apparel</span><span class="lg l6">Community</span><span class="lg l7">Live experiences</span></div>
+        <div class="logos-set"><span class="lg l1">MUSIC</span><span class="lg l2">Content</span><span class="lg l3">Podcasts</span><span class="lg l4">Merch</span><span class="lg l5">apparel</span><span class="lg l6">Community</span><span class="lg l7">Live experiences</span></div>
+      </div>
+    </div>
+    <div class="foot-cta"><a class="btn-accent" href="contact.html?topic=business">Business enquiries
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M5 11 11 5M6 5h5v5"/></svg></a></div>
+  </div>
+  <svg class="foot-tab" viewBox="0 0 250 30" preserveAspectRatio="none" aria-hidden="true"><path d="M0 30 C20 30 25 28 35 18 C48 5 55 0 75 0 H175 C195 0 202 5 215 18 C225 28 230 30 250 30 Z"/></svg>
+  <div class="foot-bar">
+    <span>© <span data-year>2026</span> <b>the King will come</b>. All rights reserved</span>
+    <nav aria-label="Legal"><a class="txt-link" href="#">Privacy policy</a><a class="txt-link" href="#">Terms</a></nav>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js"></script>
+<script src="assets/site.js"></script>
+<script>
+  /* discography filter */
+  (() => {
+    const tabs = [...document.querySelectorAll('.tab')], items = [...document.querySelectorAll('#grid .rel')];
+    tabs.forEach(t => t.addEventListener('click', () => {
+      tabs.forEach(x => x.setAttribute('aria-selected', x === t));
+      items.forEach(el => el.classList.toggle('hide', t.dataset.f !== 'all' && el.dataset.kind !== t.dataset.f));
+    }));
+  })();
+</script>
+</body>
+</html>

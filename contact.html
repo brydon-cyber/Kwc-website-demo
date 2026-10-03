@@ -1,0 +1,226 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Contact · the King will come</title>
+<meta name="description" content="Say hello to the King will come: questions, bookings, business enquiries, or your story.">
+<meta name="theme-color" content="#faf9f6">
+<link rel="icon" type="image/png" href="assets/logo/lily-charcoal.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Mona+Sans:wdth,wght@75..125,200..900&family=DM+Serif+Display:ital@0;1&family=Caveat+Brush&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+<script>tailwind.config = { corePlugins: { preflight: false } }</script>
+<link rel="stylesheet" href="assets/site.css">
+<style>
+  .ct { display: grid; grid-template-columns: 1fr 52rem; gap: 6rem; align-items: start; padding: 13rem 1.25rem 10rem; }
+  .ct h1 { line-height: .84; margin-bottom: 3rem; position: relative; }
+  .ct h1 .sans-x { display: block; font-size: 11rem; font-weight: 800; }
+  .ct h1 .serif { display: block; font-size: 11.6rem; text-transform: uppercase; line-height: .86; }
+  .ct h1 .scr { position: absolute; left: 21rem; top: .4rem; z-index: -1; font-family: var(--script); font-size: 9rem; color: var(--kwc-tan); transform: rotate(-12deg); line-height: 1; pointer-events: none; }
+  .ct h1 { isolation: isolate; }
+  .ct .lede { margin-bottom: 3.6rem; }
+  .ct .topics { list-style: none; display: grid; gap: .9rem; margin-bottom: 4rem; }
+  .ct .topics li { display: flex; gap: 1rem; align-items: baseline; font-size: 1.3rem; }
+  .ct .topics li b { font-family: var(--serif); font-weight: 400; font-size: 1.8rem; min-width: 15rem; }
+  .ct .soc { display: flex; gap: 1.6rem; font-size: 1.05rem; }
+
+  /* form card: the elevated surface on the page */
+  .card { position: relative; background: var(--kwc-charcoal); color: var(--kwc-lightgrey); border-radius: 2rem; padding: 3.2rem; box-shadow: 0 1px 2px rgb(68 65 65 / .1), 0 1.6rem 3.2rem -1.2rem rgb(68 65 65 / .45); overflow: hidden; }
+  .card .topo { z-index: 0; }
+  .card > *:not(.topo) { position: relative; z-index: 1; }
+  .card h2 { font-family: var(--serif); font-weight: 400; font-size: 2.6rem; line-height: 1; margin-bottom: .6rem; }
+  .card .sub { font-size: 1.05rem; color: var(--kwc-denim); margin-bottom: 2.4rem; }
+  .f { display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem; }
+  .fld { display: flex; flex-direction: column; gap: .55rem; }
+  .fld.full { grid-column: 1 / -1; }
+  .fld label { font-size: .78rem; font-weight: 650; text-transform: uppercase; letter-spacing: .02em; color: var(--kwc-denim); }
+  .fld input, .fld select, .fld textarea {
+    width: 100%; border: 0; border-radius: .7rem; padding: 1rem 1.1rem; font-size: 1.15rem;
+    background: rgb(250 249 246 / .07); color: var(--kwc-lightgrey);
+    box-shadow: inset 0 0 0 1px rgb(250 249 246 / .16); transition: box-shadow .25s ease;
+  }
+  .fld input::placeholder, .fld textarea::placeholder { color: rgb(250 249 246 / .4); }
+  .fld input:hover, .fld select:hover, .fld textarea:hover { box-shadow: inset 0 0 0 1px rgb(250 249 246 / .32); }
+  .fld input:focus-visible, .fld select:focus-visible, .fld textarea:focus-visible { outline: none; box-shadow: inset 0 0 0 2px var(--kwc-tan); }
+  .fld select { appearance: none; background-image: linear-gradient(45deg, transparent 50%, var(--kwc-tan) 50%), linear-gradient(135deg, var(--kwc-tan) 50%, transparent 50%); background-position: calc(100% - 1.5rem) 52%, calc(100% - 1.1rem) 52%; background-size: .4rem .4rem; background-repeat: no-repeat; padding-right: 2.6rem; }
+  .fld select option { color: var(--kwc-charcoal); }
+  .fld textarea { min-height: 11rem; resize: vertical; line-height: 1.4; }
+  .fld .err { font-size: .85rem; color: var(--kwc-tan); min-height: 1rem; }
+  .fld[data-bad] input, .fld[data-bad] textarea, .fld[data-bad] select { box-shadow: inset 0 0 0 2px var(--kwc-tan); }
+  .send { margin-top: 1.8rem; display: flex; justify-content: space-between; align-items: center; gap: 1rem; flex-wrap: wrap; }
+  .send small { font-size: .85rem; color: rgb(250 249 246 / .55); max-width: 22rem; }
+  .send .btn-accent { height: 3.6rem; padding: 0 1.6rem; font-size: 1.15rem; }
+
+  .done { display: none; text-align: center; padding: 4rem 1rem; }
+  .done img { width: 6rem; margin: 0 auto 2rem; }
+  .done h2 { font-size: 3.6rem; margin-bottom: 1rem; }
+  .done p { color: var(--kwc-denim); font-size: 1.2rem; margin-bottom: 2.2rem; }
+  .card.sent form { display: none; }
+  .card.sent .done { display: block; animation: pop .7s var(--cubic-default); }
+  @keyframes pop { from { opacity: 0; transform: translateY(1.2rem) scale(.98); } }
+
+  @media (max-width: 767px) {
+    .ct { grid-template-columns: 1fr; gap: 4rem; padding: 11rem 1.6rem 7rem; }
+    .ct h1 .sans-x { font-size: 7.6rem; } .ct h1 .serif { font-size: 8rem; }
+    .ct h1 .scr { left: 15rem; top: .2rem; font-size: 6.4rem; }
+    .ct .topics li { flex-direction: column; gap: .2rem; font-size: 1.5rem; }
+    .ct .soc { font-size: 1.3rem; flex-wrap: wrap; }
+    .card { padding: 2.4rem 1.8rem; border-radius: 1.6rem; }
+    .f { grid-template-columns: 1fr; }
+    .fld label { font-size: 1rem; }
+    .fld input, .fld select, .fld textarea { font-size: 1.6rem; }
+    .card .sub, .send small { font-size: 1.3rem; }
+    .send .btn-accent { width: 100%; justify-content: center; height: 4.6rem; font-size: 1.5rem; }
+  }
+</style>
+</head>
+<body>
+
+<header class="nav" id="nav" data-on="light">
+  <a href="index.html" class="nav-logo" aria-label="the King will come, home">
+    <img class="d" src="assets/logo/stacked-charcoal.png" alt="the King will come">
+    <img class="l" src="assets/logo/stacked-lightgrey.png" alt="" aria-hidden="true">
+  </a>
+  <div class="nav-right">
+    <a class="btn-accent" href="index.html#store">
+      <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M4 7h12l-1 10H5L4 7Z"/><path d="M7 7V5.5a3 3 0 0 1 6 0V7"/></svg>
+      Store
+    </a>
+    <button class="menu-btn" id="menuBtn" aria-label="Open menu" aria-expanded="false" aria-controls="menu"><i></i><i></i></button>
+  </div>
+</header>
+<nav class="menu" id="menu" aria-label="Main">
+  <a class="sans-x" href="index.html">Home</a>
+  <a class="sans-x" href="about.html">About</a>
+  <a class="sans-x" href="music.html">Music</a>
+  <a class="sans-x" href="contact.html" aria-current="page">Contact</a>
+  <a class="sans-x accent" href="index.html#store">Store</a>
+</nav>
+
+<main>
+<section class="section light" data-theme="light">
+  <svg class="topo" data-topo="12" data-seed="401" aria-hidden="true"></svg>
+  <div class="ct">
+    <div>
+      <p class="eyebrow rv" style="font-size:.9rem; margin-bottom:2.4rem">Contact</p>
+      <h1 class="rv" style="--d:.08s"><span class="sans-x">Say</span><span class="serif">hello.</span><span class="scr" aria-hidden="true">hi!</span></h1>
+      <p class="lede rv" style="--d:.16s">Questions, bookings, collaborations, or a story you want to share. We listen first, so pull up a chair and tell us what’s on your mind.</p>
+      <ul class="topics rv" style="--d:.22s">
+        <li><b>Bookings</b><span>Live experiences and events</span></li>
+        <li><b>Business</b><span>Partnerships and collaborations</span></li>
+        <li><b>Press</b><span>Interviews and features</span></li>
+        <li><b>Your story</b><span>We’d love to hear it</span></li>
+      </ul>
+      <nav class="soc cond rv" style="--d:.28s" aria-label="Social">
+        <a class="txt-link" href="#">YouTube</a><a class="txt-link" href="#">Instagram</a><a class="txt-link" href="#">Spotify</a><a class="txt-link" href="#">TikTok</a>
+      </nav>
+    </div>
+
+    <!-- MOCK FORM: front-end only, nothing is sent anywhere. Connect it to a form service before launch. -->
+    <div class="card rv" id="card" data-theme="dark" style="--d:.12s">
+      <svg class="topo" data-topo="8" data-seed="419" aria-hidden="true"></svg>
+      <form id="form" novalidate>
+        <h2>Send us a note</h2>
+        <p class="sub">We’d love to hear from you.</p>
+        <div class="f">
+          <div class="fld"><label for="name">Name</label><input id="name" name="name" autocomplete="name" placeholder="Your name" required><span class="err" aria-live="polite"></span></div>
+          <div class="fld"><label for="email">Email</label><input id="email" name="email" type="email" autocomplete="email" placeholder="you@example.com" required><span class="err" aria-live="polite"></span></div>
+          <div class="fld full"><label for="topic">What’s this about?</label>
+            <select id="topic" name="topic" required>
+              <option value="hello">Just saying hello</option>
+              <option value="booking">Booking / live event</option>
+              <option value="business">Business enquiry</option>
+              <option value="press">Press</option>
+              <option value="story">Sharing my story</option>
+            </select><span class="err" aria-live="polite"></span></div>
+          <div class="fld full"><label for="msg">Message</label><textarea id="msg" name="message" placeholder="Tell us a little more…" required minlength="10"></textarea><span class="err" aria-live="polite"></span></div>
+        </div>
+        <div class="send">
+          <small>This is a demo form. Messages aren’t sent yet.</small>
+          <button class="btn-accent" type="submit">Send message
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M5 11 11 5M6 5h5v5"/></svg></button>
+        </div>
+      </form>
+      <div class="done" role="status" aria-live="polite">
+        <img src="assets/logo/lily-tan.png" alt="">
+        <h2 class="serif">Thank you<span id="who"></span>.</h2>
+        <p>Your note is in. (Demo only: nothing was sent.)</p>
+        <button class="btn-ghost" type="button" id="again">Send another</button>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer class="foot" data-theme="dark">
+  <div class="foot-card">
+    <svg class="topo" data-topo="12" data-seed="113" aria-hidden="true"></svg>
+    <img class="foot-lily" src="assets/logo/lily-tan.png" alt="" aria-hidden="true">
+    <h2 class="foot-h"><span class="sans-x">There’s always </span><span class="serif">room</span><br><span class="sans-x">at the </span><span class="serif">table</span><span class="sans-x">.</span></h2>
+    <div class="foot-col l">
+      <span class="eyebrow">Pages</span>
+      <a class="cond" href="index.html">Home</a>
+      <a class="cond" href="about.html">About</a>
+      <a class="cond" href="music.html">Music</a>
+      <a class="cond" href="contact.html" aria-current="page">Contact</a>
+      <a class="cond store-l" href="index.html#store">Store</a>
+    </div>
+    <div class="foot-col r">
+      <span class="eyebrow">Follow on</span>
+      <a class="cond" href="#">YouTube</a>
+      <a class="cond" href="#">Instagram</a>
+      <a class="cond" href="#">Spotify</a>
+      <a class="cond" href="#">TikTok</a>
+    </div>
+    <div class="foot-photo"><img src="assets/img/footer.jpg" alt="" loading="lazy"></div>
+    <div class="foot-logos logos" aria-hidden="true">
+      <div class="logos-track">
+        <div class="logos-set"><span class="lg l1">MUSIC</span><span class="lg l2">Content</span><span class="lg l3">Podcasts</span><span class="lg l4">Merch</span><span class="lg l5">apparel</span><span class="lg l6">Community</span><span class="lg l7">Live experiences</span></div>
+        <div class="logos-set"><span class="lg l1">MUSIC</span><span class="lg l2">Content</span><span class="lg l3">Podcasts</span><span class="lg l4">Merch</span><span class="lg l5">apparel</span><span class="lg l6">Community</span><span class="lg l7">Live experiences</span></div>
+      </div>
+    </div>
+    <div class="foot-cta"><a class="btn-accent" href="contact.html?topic=business">Business enquiries
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M5 11 11 5M6 5h5v5"/></svg></a></div>
+  </div>
+  <svg class="foot-tab" viewBox="0 0 250 30" preserveAspectRatio="none" aria-hidden="true"><path d="M0 30 C20 30 25 28 35 18 C48 5 55 0 75 0 H175 C195 0 202 5 215 18 C225 28 230 30 250 30 Z"/></svg>
+  <div class="foot-bar">
+    <span>© <span data-year>2026</span> <b>the King will come</b>. All rights reserved</span>
+    <nav aria-label="Legal"><a class="txt-link" href="#">Privacy policy</a><a class="txt-link" href="#">Terms</a></nav>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js"></script>
+<script src="assets/site.js"></script>
+<script>
+  /* mock contact form: validates in the browser, then shows a thank-you. Nothing is sent. */
+  (() => {
+    const form = document.getElementById('form'), card = document.getElementById('card');
+    const topic = new URLSearchParams(location.search).get('topic');
+    if (topic && form.topic.querySelector(`option[value="${CSS.escape(topic)}"]`)) form.topic.value = topic;
+
+    const check = el => {
+      const fld = el.closest('.fld'), err = fld.querySelector('.err');
+      let msg = '';
+      if (el.validity.valueMissing) msg = el.id === 'msg' ? 'Tell us a little about why you’re reaching out.' : 'This one’s needed.';
+      else if (el.validity.typeMismatch) msg = 'That email doesn’t look quite right.';
+      else if (el.validity.tooShort) msg = 'Just a few more words, please.';
+      err.textContent = msg; msg ? fld.setAttribute('data-bad', '') : fld.removeAttribute('data-bad');
+      return !msg;
+    };
+    form.querySelectorAll('input, textarea, select').forEach(el => el.addEventListener('blur', () => el.value && check(el)));
+    form.addEventListener('submit', e => {
+      e.preventDefault();
+      const els = [...form.querySelectorAll('input, textarea, select')];
+      const ok = els.map(check).every(Boolean);
+      if (!ok) { els.find(el => el.closest('.fld').hasAttribute('data-bad')).focus(); return; }
+      const first = document.getElementById('name').value.trim().split(/\s+/)[0];
+      document.getElementById('who').textContent = first ? `, ${first}` : '';
+      card.classList.add('sent');
+    });
+    document.getElementById('again').addEventListener('click', () => { form.reset(); card.classList.remove('sent'); document.getElementById('name').focus(); });
+  })();
+</script>
+</body>
+</html>

@@ -1,0 +1,243 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>About · the King will come</title>
+<meta name="description" content="Who we are: a collective of songwriters, producers, musicians and creatives making loving, honest, vulnerable and safe spaces.">
+<meta name="theme-color" content="#444141">
+<link rel="icon" type="image/png" href="assets/logo/lily-charcoal.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Mona+Sans:wdth,wght@75..125,200..900&family=DM+Serif+Display:ital@0;1&family=Caveat+Brush&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+<script>tailwind.config = { corePlugins: { preflight: false } }</script>
+<link rel="stylesheet" href="assets/site.css">
+<style>
+  /* hero */
+  .ab-hero { display: grid; grid-template-columns: minmax(0, 1fr) 34rem; gap: 3rem; align-items: end; }
+  .ab-hero h1 .sans-x { font-size: 8.4rem; }
+  .ab-hero h1 .serif { font-size: 8.8rem; }
+  .ab-hero .lede { margin-bottom: 2.2rem; max-width: none; }
+  .ab-photo { margin: 0 1.25rem; height: 46rem; border-radius: 2rem; overflow: hidden; }
+  .ab-photo img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 62%; transition: transform 1.4s var(--cubic-default); }
+  .ab-photo:hover img { transform: scale(1.03); }
+
+  /* the mark */
+  .mark { display: grid; grid-template-columns: 1fr 1fr; gap: 6rem; align-items: center; padding: 11rem 6rem; }
+  .mark-lily { position: relative; display: grid; place-items: center; aspect-ratio: 1; border-radius: 50%; box-shadow: inset 0 0 0 1px rgb(201 178 146 / .3); }
+  .mark-lily img { width: 64%; }
+  .mark-lily::after { content: ""; position: absolute; inset: 9%; border-radius: 50%; box-shadow: inset 0 0 0 1px rgb(201 178 146 / .18); }
+  .mark h2 { line-height: .86; margin: 2rem 0 2.6rem; }
+  .mark h2 .sans-x { display: block; font-size: 6rem; font-weight: 800; }
+  .mark h2 .serif { display: block; font-size: 6.4rem; text-transform: uppercase; color: var(--kwc-tan); }
+  .mark p { font-size: 1.5rem; line-height: 1.32; max-width: 40rem; color: var(--kwc-denim); }
+  .mark p + p { margin-top: 1.2rem; }
+  .mark cite { font-style: normal; color: var(--kwc-tan); }
+
+  /* how we show up */
+  .ways-hd { display: grid; grid-template-columns: 1fr 30rem; gap: 2rem; align-items: end; padding: 10rem 1.25rem 4rem; }
+  .ways-hd h2 { line-height: .86; }
+  .ways-hd h2 .sans-x { display: block; font-size: 6rem; font-weight: 800; }
+  .ways-hd h2 .serif { display: block; font-size: 6.4rem; text-transform: uppercase; }
+  .ways-hd p { font-size: 1.4rem; line-height: 1.3; }
+  .row { display: grid; grid-template-columns: 6rem 1fr 32rem; align-items: center; gap: 2rem; padding: 2.2rem 1.25rem; border-top: 1px solid rgb(68 65 65 / .2); }
+  .row:last-child { border-bottom: 1px solid rgb(68 65 65 / .2); }
+  .row .n { font-size: .9rem; font-weight: 650; opacity: .6; }
+  .row h3 { font-size: 4.2rem; line-height: 1; transition: transform var(--animation-default); }
+  .row p { font-size: 1.3rem; line-height: 1.3; }
+  .row:hover h3 { transform: translateX(1.2rem); color: var(--kwc-rust); }
+
+  /* palette */
+  .pal { padding: 10rem 1.25rem; }
+  .pal-hd { display: flex; justify-content: space-between; align-items: end; gap: 3rem; margin-bottom: 4rem; }
+  .pal-hd h2 { line-height: .86; }
+  .pal-hd h2 .sans-x { display: block; font-size: 6rem; font-weight: 800; }
+  .pal-hd h2 .serif { display: block; font-size: 6.4rem; text-transform: uppercase; color: var(--kwc-tan); }
+  .pal-hd p { max-width: 34rem; font-size: 1.4rem; line-height: 1.3; color: var(--kwc-denim); }
+  .sw-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 1rem; }
+  .sw { border-radius: 1.4rem; overflow: hidden; background: rgb(250 249 246 / .05); box-shadow: inset 0 0 0 1px rgb(250 249 246 / .12); transition: transform var(--animation-default); }
+  .sw:hover { transform: translateY(-.6rem); }
+  .sw .chip { height: 17rem; }
+  .sw .meta { padding: 1.2rem 1.3rem 1.4rem; display: flex; justify-content: space-between; align-items: baseline; gap: .6rem; }
+  .sw .meta b { font-size: 1.2rem; font-weight: 650; }
+  .sw .meta span { font-size: .95rem; opacity: .65; font-variant-numeric: tabular-nums; }
+  .sw .meta em { display: block; font-style: normal; font-size: .75rem; opacity: .55; margin-top: .25rem; text-transform: uppercase; letter-spacing: .04em; }
+
+  /* closing band */
+  .band { position: relative; height: 70vh; min-height: 34rem; display: grid; place-items: center; text-align: center; color: var(--kwc-lightgrey); }
+  .band img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: 0; }
+  .band::before { content: ""; position: absolute; inset: 0; z-index: 1; background: linear-gradient(to top, rgb(0 0 0 / .62), rgb(0 0 0 / .25)); }
+  .band > div { position: relative; z-index: 2; }
+  .band h2 { font-size: 6.4rem; line-height: .88; margin-bottom: 2.4rem; }
+  .band h2 .sans-x { font-weight: 800; }
+  .band h2 .serif { text-transform: uppercase; color: var(--kwc-tan); }
+
+  @media (max-width: 767px) {
+    .ab-hero { grid-template-columns: 1fr; gap: 2rem; }
+    .ab-hero h1 .sans-x { font-size: 4.6rem; }
+    .ab-hero h1 .serif { font-size: 4.9rem; }
+    .ab-photo { margin: 0 1.6rem; height: 30rem; border-radius: 1.4rem; }
+    .mark { grid-template-columns: 1fr; gap: 4rem; padding: 8rem 1.6rem; }
+    .mark-lily { width: 70%; margin: 0 auto; }
+    .mark h2 .sans-x { font-size: 5rem; } .mark h2 .serif { font-size: 5.2rem; }
+    .mark p { font-size: 1.6rem; }
+    .ways-hd { grid-template-columns: 1fr; padding: 8rem 1.6rem 3rem; }
+    .ways-hd h2 .sans-x { font-size: 5rem; } .ways-hd h2 .serif { font-size: 5.2rem; }
+    .ways-hd p { font-size: 1.6rem; }
+    .row { grid-template-columns: 3rem 1fr; padding: 2rem 1.6rem; gap: .6rem 1rem; }
+    .row h3 { font-size: 3.4rem; }
+    .row p { grid-column: 2; font-size: 1.5rem; }
+    .pal { padding: 8rem 1.6rem; }
+    .pal-hd { flex-direction: column; align-items: start; }
+    .pal-hd h2 .sans-x { font-size: 5rem; } .pal-hd h2 .serif { font-size: 5.2rem; }
+    .pal-hd p { font-size: 1.6rem; }
+    .sw-grid { grid-template-columns: repeat(2, 1fr); }
+    .sw .chip { height: 10rem; }
+    .sw .meta b { font-size: 1.4rem; } .sw .meta span { font-size: 1.1rem; } .sw .meta em { font-size: 1rem; }
+    .band h2 { font-size: 4.6rem; }
+  }
+</style>
+</head>
+<body>
+
+<header class="nav" id="nav" data-on="light">
+  <a href="index.html" class="nav-logo" aria-label="the King will come, home">
+    <img class="d" src="assets/logo/stacked-charcoal.png" alt="the King will come">
+    <img class="l" src="assets/logo/stacked-lightgrey.png" alt="" aria-hidden="true">
+  </a>
+  <div class="nav-right">
+    <a class="btn-accent" href="index.html#store">
+      <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M4 7h12l-1 10H5L4 7Z"/><path d="M7 7V5.5a3 3 0 0 1 6 0V7"/></svg>
+      Store
+    </a>
+    <button class="menu-btn" id="menuBtn" aria-label="Open menu" aria-expanded="false" aria-controls="menu"><i></i><i></i></button>
+  </div>
+</header>
+<nav class="menu" id="menu" aria-label="Main">
+  <a class="sans-x" href="index.html">Home</a>
+  <a class="sans-x" href="about.html" aria-current="page">About</a>
+  <a class="sans-x" href="music.html">Music</a>
+  <a class="sans-x" href="contact.html">Contact</a>
+  <a class="sans-x accent" href="index.html#store">Store</a>
+</nav>
+
+<main>
+
+<!-- hero -->
+<section class="section light" data-theme="light">
+  <svg class="topo" data-topo="10" data-seed="201" aria-hidden="true"></svg>
+  <div class="page-hero ab-hero">
+    <div>
+      <p class="eyebrow rv"><img src="assets/logo/lily-charcoal.png" alt="">About us</p>
+      <h1 class="rv" style="--d:.08s"><span class="sans-x">A collective</span><span class="serif">for the</span><span class="sans-x">neighborhood.</span></h1>
+    </div>
+    <div class="rv" style="--d:.2s">
+      <p class="lede">We’re a collective of songwriters, producers, musicians and creatives. Our biggest goal is to create loving, honest, vulnerable and safe spaces where anybody, including ourselves, can connect with God, others and self, no matter where they are in their journey.</p>
+      <a class="btn-accent" href="contact.html">Say hello
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M5 11 11 5M6 5h5v5"/></svg></a>
+    </div>
+  </div>
+  <div class="ab-photo rv"><img src="assets/img/about-court.jpg" alt="The King will come collective gathered on a neighborhood basketball court with mountains behind them"></div>
+</section>
+
+<!-- the mark -->
+<section class="section dark" data-theme="dark">
+  <svg class="topo" data-topo="10" data-seed="223" aria-hidden="true"></svg>
+  <div class="mark">
+    <div class="mark-lily rv"><img src="assets/logo/lily-tan.png" alt="The King will come crown-and-lily mark"></div>
+    <div>
+      <p class="eyebrow rv" style="color:var(--kwc-tan)">The mark</p>
+      <h2 class="rv" style="--d:.08s"><span class="sans-x">Crown</span><span class="serif">&amp; lily</span></h2>
+      <p class="rv" style="--d:.16s">Our logo was designed to communicate the welcoming, yet bold and majestic, presence of the King.</p>
+      <p class="rv" style="--d:.22s">The icon is a hybrid of the crown and the lily, a symbol of Jesus’ finished work on the cross, His Kingship, and His tender, pure and caring nature as the “lily of the valleys” <cite>(Song of Solomon 2:1)</cite>, who invites us to rest in Him and “consider the lilies of the field” <cite>(Matthew 6:28)</cite>.</p>
+    </div>
+  </div>
+</section>
+
+<!-- how we show up -->
+<section class="section light" data-theme="light">
+  <div class="ways-hd">
+    <h2 class="rv"><span class="sans-x">How we</span><span class="serif">show up</span></h2>
+    <p class="rv" style="--d:.1s">The language of belonging: welcoming, inviting and inclusive. Here’s how we try to talk with everybody in the neighborhood.</p>
+  </div>
+  <div role="list">
+    <div class="row rv" role="listitem"><span class="n">01</span><h3 class="serif">We listen first</h3><p>We don’t try to fix, solve or prescribe before we’ve really heard you.</p></div>
+    <div class="row rv" role="listitem"><span class="n">02</span><h3 class="serif">Step zero</h3><p>We respect where everybody might be in their journey, including the very beginning.</p></div>
+    <div class="row rv" role="listitem"><span class="n">03</span><h3 class="serif">Not preachy</h3><p>No “we have all the answers, so follow us.” Just humble, nonjudgmental conversation.</p></div>
+    <div class="row rv" role="listitem"><span class="n">04</span><h3 class="serif">Honest &amp; vulnerable</h3><p>Being real with each other is what makes a space feel safe.</p></div>
+    <div class="row rv" role="listitem"><span class="n">05</span><h3 class="serif">Stories over debates</h3><p>We share our stories and amplify yours. It keeps us in the realm of relationship.</p></div>
+    <div class="row rv" role="listitem"><span class="n">06</span><h3 class="serif">Fun &amp; light-hearted</h3><p>We don’t take ourselves too seriously, and we laugh a lot.</p></div>
+  </div>
+</section>
+
+<!-- palette -->
+<section class="section dark pal" data-theme="dark">
+  <svg class="topo" data-topo="8" data-seed="241" aria-hidden="true"></svg>
+  <div class="pal-hd">
+    <h2 class="rv"><span class="sans-x">Colors of the</span><span class="serif">neighborhood</span></h2>
+    <p class="rv" style="--d:.1s">Our palette reflects our core values: relationship, community, unity, growth, acceptance, safety, love and connection. It’s made of the colors you might see on a walk through the neighborhood.</p>
+  </div>
+  <div class="sw-grid">
+    <div class="sw rv"><div class="chip" style="background:#c9b292"></div><div class="meta"><div><b>Tan</b><em>Primary</em></div><span>#C9B292</span></div></div>
+    <div class="sw rv" style="--d:.05s"><div class="chip" style="background:#96441b"></div><div class="meta"><div><b>Rust</b><em>Primary</em></div><span>#96441B</span></div></div>
+    <div class="sw rv" style="--d:.1s"><div class="chip" style="background:#444141; box-shadow: inset 0 0 0 1px rgb(250 249 246 / .35)"></div><div class="meta"><div><b>Charcoal</b><em>Primary</em></div><span>#444141</span></div></div>
+    <div class="sw rv" style="--d:.15s"><div class="chip" style="background:#d1d8d8"></div><div class="meta"><div><b>Light denim</b><em>Secondary</em></div><span>#D1D8D8</span></div></div>
+    <div class="sw rv" style="--d:.2s"><div class="chip" style="background:#6c6030"></div><div class="meta"><div><b>Green</b><em>Secondary</em></div><span>#6C6030</span></div></div>
+    <div class="sw rv" style="--d:.25s"><div class="chip" style="background:#faf9f6"></div><div class="meta"><div><b>Light grey</b><em>Secondary</em></div><span>#FAF9F6</span></div></div>
+  </div>
+</section>
+
+<!-- closing band -->
+<section class="band" data-theme="dark">
+  <img src="assets/img/about-group.jpg" alt="The collective seated together in a bright warehouse" loading="lazy">
+  <div class="rv">
+    <h2><span class="sans-x">Come as </span><span class="serif">you are</span><span class="sans-x">.</span></h2>
+    <a class="btn-accent" href="music.html">Hear the music
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M5 11 11 5M6 5h5v5"/></svg></a>
+  </div>
+</section>
+
+</main>
+
+<footer class="foot" data-theme="dark">
+  <div class="foot-card">
+    <svg class="topo" data-topo="12" data-seed="113" aria-hidden="true"></svg>
+    <img class="foot-lily" src="assets/logo/lily-tan.png" alt="" aria-hidden="true">
+    <h2 class="foot-h"><span class="sans-x">There’s always </span><span class="serif">room</span><br><span class="sans-x">at the </span><span class="serif">table</span><span class="sans-x">.</span></h2>
+    <div class="foot-col l">
+      <span class="eyebrow">Pages</span>
+      <a class="cond" href="index.html">Home</a>
+      <a class="cond" href="about.html" aria-current="page">About</a>
+      <a class="cond" href="music.html">Music</a>
+      <a class="cond" href="contact.html">Contact</a>
+      <a class="cond store-l" href="index.html#store">Store</a>
+    </div>
+    <div class="foot-col r">
+      <span class="eyebrow">Follow on</span>
+      <a class="cond" href="#">YouTube</a>
+      <a class="cond" href="#">Instagram</a>
+      <a class="cond" href="#">Spotify</a>
+      <a class="cond" href="#">TikTok</a>
+    </div>
+    <div class="foot-photo"><img src="assets/img/footer.jpg" alt="" loading="lazy"></div>
+    <div class="foot-logos logos" aria-hidden="true">
+      <div class="logos-track">
+        <div class="logos-set"><span class="lg l1">MUSIC</span><span class="lg l2">Content</span><span class="lg l3">Podcasts</span><span class="lg l4">Merch</span><span class="lg l5">apparel</span><span class="lg l6">Community</span><span class="lg l7">Live experiences</span></div>
+        <div class="logos-set"><span class="lg l1">MUSIC</span><span class="lg l2">Content</span><span class="lg l3">Podcasts</span><span class="lg l4">Merch</span><span class="lg l5">apparel</span><span class="lg l6">Community</span><span class="lg l7">Live experiences</span></div>
+      </div>
+    </div>
+    <div class="foot-cta"><a class="btn-accent" href="contact.html?topic=business">Business enquiries
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M5 11 11 5M6 5h5v5"/></svg></a></div>
+  </div>
+  <svg class="foot-tab" viewBox="0 0 250 30" preserveAspectRatio="none" aria-hidden="true"><path d="M0 30 C20 30 25 28 35 18 C48 5 55 0 75 0 H175 C195 0 202 5 215 18 C225 28 230 30 250 30 Z"/></svg>
+  <div class="foot-bar">
+    <span>© <span data-year>2026</span> <b>the King will come</b>. All rights reserved</span>
+    <nav aria-label="Legal"><a class="txt-link" href="#">Privacy policy</a><a class="txt-link" href="#">Terms</a></nav>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js"></script>
+<script src="assets/site.js"></script>
+</body>
+</html>
