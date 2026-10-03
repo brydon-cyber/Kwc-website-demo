@@ -1,0 +1,12 @@
+# dependencies & local tooling output
+node_modules/
+temporary screenshots/
+
+# source brand files (full-res originals + brand guide); the site uses web-sized copies in assets/
+brand_assets/
+
+# reference screenshots
+/*.png
+
+# OS cruft
+.DS_Store

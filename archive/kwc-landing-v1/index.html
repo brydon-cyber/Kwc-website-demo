@@ -1,0 +1,683 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>the King will come</title>
+<meta name="description" content="a collective of songwriters, producers, musicians and creatives making safe, honest spaces to connect with God, others and self.">
+<meta name="theme-color" content="#444141">
+<link rel="icon" type="image/png" href="assets/logo/lily-rust.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<!--
+  Brand fonts: "Perfectly Nineties" (titles) and "Neue Einstellung" (body) are licensed typefaces and were not in brand_assets.
+  The stacks below use them first (if installed / self-hosted later) and fall back to Fraunces + Hanken Grotesk.
+  Commuter (primary) only appears inside the logo artwork, per the brand guide.
+-->
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..600;1,9..144,300..500&family=Hanken+Grotesk:wght@400;500;600&display=swap" rel="stylesheet">
+
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: {
+          tan: '#c9b292', rust: '#96441b', charcoal: '#444141',
+          denim: '#d1d8d8', moss: '#6c6030', paper: '#faf9f6'
+        },
+        fontFamily: {
+          display: ['"Perfectly Nineties"', 'Fraunces', 'Georgia', 'serif'],
+          body: ['"Neue Einstellung"', '"Hanken Grotesk"', 'system-ui', 'sans-serif']
+        }
+      }
+    }
+  }
+</script>
+
+<style>
+  /* ───────── tokens (exact brand hexes + derived depth) ───────── */
+  :root {
+    --tan: #c9b292;
+    --rust: #96441b;
+    --charcoal: #444141;
+    --denim: #d1d8d8;
+    --moss: #6c6030;
+    --paper: #faf9f6;
+
+    /* derived only by mixing brand colors */
+    --night: color-mix(in srgb, var(--charcoal) 62%, #000);
+    --rust-deep: color-mix(in srgb, var(--rust) 78%, #000);
+    --tan-soft: color-mix(in srgb, var(--tan) 38%, var(--paper));
+    --moss-deep: color-mix(in srgb, var(--moss) 70%, #000);
+
+    --font-display: "Perfectly Nineties", "Fraunces", Georgia, serif;
+    --font-body: "Neue Einstellung", "Hanken Grotesk", system-ui, sans-serif;
+
+    --gutter: clamp(1.25rem, 4.5vw, 3.5rem);
+    --section: clamp(5.5rem, 12vw, 11rem);
+    --spring: cubic-bezier(.3, 1.35, .5, 1);
+    --ease-out: cubic-bezier(.16, 1, .3, 1);
+
+    /* layered, color-tinted shadows: base → elevated → floating */
+    --shadow-1: 0 1px 2px rgb(68 65 65 / .08), 0 6px 14px -6px rgb(150 68 27 / .14);
+    --shadow-2: 0 2px 4px rgb(68 65 65 / .08), 0 12px 24px -8px rgb(150 68 27 / .18), 0 32px 56px -20px rgb(68 65 65 / .28);
+    --shadow-3: 0 3px 6px rgb(40 36 34 / .10), 0 18px 36px -10px rgb(150 68 27 / .22), 0 48px 90px -24px rgb(40 36 34 / .45);
+  }
+
+  html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+  body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--charcoal);
+    font-family: var(--font-body);
+    font-size: 1.0625rem;
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+  img { display: block; max-width: 100%; }
+  ::selection { background: var(--rust); color: var(--paper); }
+
+  /* film grain over everything: texture, not noise */
+  body::after {
+    content: "";
+    position: fixed; inset: 0; z-index: 90; pointer-events: none;
+    opacity: .09;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 .27  0 0 0 0 .25  0 0 0 0 .25  0 0 0 .9 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+  }
+
+  .font-display, h1, h2, h3, .display { font-family: var(--font-display); font-weight: 400; font-variation-settings: "SOFT" 60, "WONK" 0; }
+  .sub { font-family: var(--font-display); font-style: italic; font-weight: 300; }
+
+  .wrap { width: 100%; max-width: 88rem; margin-inline: auto; padding-inline: var(--gutter); }
+
+  .eyebrow {
+    font-size: .72rem; line-height: 1; font-weight: 600;
+    letter-spacing: .18em; text-transform: uppercase;
+    display: inline-flex; align-items: center; gap: .9rem;
+    opacity: .78;
+  }
+  .eyebrow::before { content: ""; width: 2.25rem; height: 1px; background: currentColor; opacity: .7; }
+
+  .h-xl { font-size: clamp(2.6rem, 6.4vw, 6rem); line-height: .98; letter-spacing: -.03em; text-wrap: balance; }
+  .h-lg { font-size: clamp(2.1rem, 4.4vw, 4rem); line-height: 1.02; letter-spacing: -.03em; text-wrap: balance; }
+
+  /* ───────── focus ───────── */
+  :focus-visible { outline: 2px solid var(--rust); outline-offset: 4px; border-radius: 4px; }
+  .on-dark :focus-visible, .hero :focus-visible, .nav :focus-visible { outline-color: var(--tan); }
+
+  /* ───────── buttons ───────── */
+  .btn {
+    position: relative; isolation: isolate; overflow: hidden;
+    display: inline-flex; align-items: center; justify-content: center; gap: .65rem;
+    padding: 1rem 1.7rem; border-radius: 999px;
+    font: 600 .95rem/1 var(--font-body); letter-spacing: .01em;
+    text-decoration: none; cursor: pointer; border: 0;
+    transition: transform .5s var(--spring);
+    -webkit-tap-highlight-color: transparent;
+  }
+  .btn::before {
+    content: ""; position: absolute; inset: 0; z-index: -1;
+    transform: translateY(101%); border-radius: inherit;
+    transition: transform .55s var(--ease-out);
+  }
+  .btn:hover { transform: translateY(-2px); }
+  .btn:hover::before, .btn:focus-visible::before { transform: translateY(0); }
+  .btn:active { transform: translateY(1px) scale(.97); transition-duration: .12s; }
+  .btn .arrow { transition: transform .5s var(--spring); }
+  .btn:hover .arrow { transform: translateX(4px); }
+
+  .btn-rust { background: var(--rust); color: var(--paper); box-shadow: var(--shadow-2); }
+  .btn-rust::before { background: var(--night); }
+  .btn-tan { background: var(--tan); color: var(--night); box-shadow: var(--shadow-2); }
+  .btn-tan::before { background: var(--paper); }
+  .btn-line { color: var(--paper); box-shadow: inset 0 0 0 1.5px rgb(250 249 246 / .55); }
+  .btn-line::before { background: rgb(250 249 246 / .16); }
+
+  .link-u {
+    position: relative; display: inline-block; text-decoration: none; color: inherit; font-weight: 600;
+  }
+  .link-u::after {
+    content: ""; position: absolute; left: 0; right: 0; bottom: -3px; height: 1.5px; background: currentColor;
+    transform: scaleX(0); transform-origin: right; transition: transform .5s var(--ease-out);
+  }
+  .link-u:hover::after, .link-u:focus-visible::after { transform: scaleX(1); transform-origin: left; }
+  .link-u:active { opacity: .7; }
+
+  /* ───────── nav ───────── */
+  .nav { position: fixed; inset: 0 0 auto 0; z-index: 60; color: var(--paper); }
+  .nav::before {
+    content: ""; position: absolute; inset: 0; z-index: -1;
+    background: color-mix(in srgb, var(--paper) 90%, transparent);
+    backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+    box-shadow: 0 1px 0 rgb(68 65 65 / .08), 0 12px 30px -18px rgb(68 65 65 / .35);
+    opacity: 0; transition: opacity .4s ease;
+  }
+  .nav.is-solid { color: var(--charcoal); }
+  .nav.is-solid::before { opacity: 1; }
+  .nav-inner { display: flex; align-items: center; justify-content: space-between; height: 5rem; }
+  .nav-logo { position: relative; display: block; height: 1.7rem; width: 13.6rem; }
+  .nav-logo img { position: absolute; inset: 0; height: 100%; width: auto; transition: opacity .4s ease; }
+  .nav-logo .on-solid { opacity: 0; }
+  .nav.is-solid .nav-logo .on-hero { opacity: 0; }
+  .nav.is-solid .nav-logo .on-solid { opacity: 1; }
+  .nav-links { display: none; align-items: center; gap: 2.25rem; font-size: .95rem; }
+  .nav-links a:not(.btn) { text-decoration: none; color: inherit; font-weight: 500; }
+  .burger { display: grid; place-items: center; width: 2.75rem; height: 2.75rem; border: 0; background: none; color: inherit; cursor: pointer; border-radius: 50%; }
+  .burger span { grid-area: 1/1; width: 1.5rem; height: 1.5px; background: currentColor; transition: transform .5s var(--spring); }
+  .burger span:first-child { transform: translateY(-4px); }
+  .burger span:last-child { transform: translateY(4px); }
+  .burger:hover span:first-child { transform: translateY(-5px); }
+  .burger:hover span:last-child { transform: translateY(5px); }
+  .burger:active { transform: scale(.92); }
+  .menu-open .burger span:first-child { transform: rotate(45deg); }
+  .menu-open .burger span:last-child { transform: rotate(-45deg); }
+  .menu-open.nav { color: var(--paper); }
+  .menu-open.nav::before { opacity: 0; }
+  .menu-open .nav-logo .on-hero { opacity: 1; }
+  .menu-open .nav-logo .on-solid { opacity: 0; }
+
+  .sheet {
+    position: fixed; inset: 0; z-index: 55; background: var(--night); color: var(--paper);
+    display: flex; flex-direction: column; justify-content: center; gap: 1.1rem;
+    padding: 6rem var(--gutter) 3rem;
+    opacity: 0; visibility: hidden; transform: translateY(-1.5rem);
+    transition: opacity .45s ease, transform .6s var(--ease-out), visibility 0s .6s;
+  }
+  .menu-open ~ .sheet, .sheet.open { opacity: 1; visibility: visible; transform: none; transition-delay: 0s; }
+  .sheet a:not(.btn) { font: 400 clamp(2.4rem, 11vw, 3.6rem)/1.05 var(--font-display); letter-spacing: -.03em; text-decoration: none; color: inherit; }
+  .sheet a:not(.btn):hover { color: var(--tan); }
+  .sheet a:not(.btn):active { transform: translateX(6px); }
+
+  @media (min-width: 880px) {
+    .nav-links { display: flex; }
+    .burger, .sheet { display: none; }
+  }
+
+  /* ───────── hero ───────── */
+  .hero { position: relative; isolation: isolate; min-height: 100svh; display: flex; flex-direction: column; justify-content: flex-start; color: var(--paper); overflow: hidden; background: var(--night); }
+  .hero-media { position: absolute; inset: -6% 0; z-index: -3; will-change: transform; }
+  .hero-media img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 78%; }
+  /* color treatment: multiply layer + gradient overlays */
+  .hero::before {
+    content: ""; position: absolute; inset: 0; z-index: -2; mix-blend-mode: multiply;
+    background:
+      radial-gradient(70% 55% at 18% 12%, rgb(150 68 27 / .55), transparent 70%),
+      radial-gradient(60% 50% at 90% 0%, rgb(108 96 48 / .55), transparent 70%),
+      linear-gradient(to bottom, rgb(201 178 146 / .35), rgb(150 68 27 / .20));
+  }
+  .hero::after {
+    content: ""; position: absolute; inset: 0; z-index: -1;
+    background:
+      linear-gradient(to bottom, rgb(30 26 24 / .72) 0%, rgb(30 26 24 / .34) 36%, transparent 58%),
+      linear-gradient(to top, rgb(30 26 24 / .72) 0%, transparent 34%);
+  }
+  .hero-copy { padding-top: clamp(8rem, 17vh, 11rem); }
+  .hero h1 { font-size: clamp(4.4rem, 21vw, 9rem); line-height: .86; letter-spacing: -.035em; text-shadow: 0 2px 40px rgb(30 26 24 / .35); }
+  .hero h1 span { display: block; }
+  /* desktop: one line across the mountains so the group stays unobstructed */
+  @media (min-width: 900px) {
+    .hero h1 { font-size: clamp(5rem, min(9.8vw, 15vh), 13rem); white-space: nowrap; }
+    .hero h1 span { display: inline; }
+    .hero h1 span + span { margin-left: .06em; }
+    .hero-copy { padding-top: clamp(6rem, 11vh, 8rem); }
+  }
+  .hero-foot { margin-top: auto; padding-bottom: clamp(1.75rem, 4vw, 3rem); }
+  .hero-sub { font-size: clamp(1.25rem, 2.1vw, 1.75rem); line-height: 1.35; max-width: 26ch; text-shadow: 0 1px 24px rgb(30 26 24 / .5); }
+  .hero-meta { font-size: .95rem; max-width: 34ch; opacity: .88; }
+
+  .lily-spin { width: 5.2rem; height: 5.2rem; }
+
+  /* ───────── marquee ───────── */
+  .marquee { background: var(--rust); color: var(--paper); overflow: hidden; padding-block: clamp(1.4rem, 3vw, 2.4rem); position: relative; }
+  .marquee-track { display: flex; width: max-content; animation: slide 46s linear infinite; will-change: transform; }
+  .marquee-group { display: flex; align-items: center; flex-shrink: 0; }
+  .marquee-group span { font: 400 clamp(3.2rem, 10vw, 9.5rem)/1 var(--font-display); letter-spacing: -.03em; padding-inline: clamp(1rem, 2.4vw, 2.4rem); }
+  .marquee-group img { height: clamp(2.2rem, 6vw, 5.4rem); width: auto; opacity: .95; }
+  .marquee:hover .marquee-track { animation-play-state: paused; }
+  @keyframes slide { to { transform: translate3d(-50%, 0, 0); } }
+
+  /* ───────── mission ───────── */
+  .mission { padding-block: var(--section); position: relative; overflow: hidden; }
+  .mission-lily { position: absolute; right: -10%; top: 6%; width: min(46rem, 70vw); opacity: .07; pointer-events: none; }
+  .print {
+    position: relative; background: var(--paper); padding: .85rem .85rem 3.1rem; box-shadow: var(--shadow-3);
+    transition: transform .8s var(--spring);
+  }
+  .print figcaption { position: absolute; left: 1.1rem; right: 1.1rem; bottom: .95rem; font: italic 300 1.05rem/1 var(--font-display); color: var(--charcoal); }
+  .print:hover { transform: rotate(0deg) translateY(-6px) scale(1.015) !important; }
+
+  /* shared photo treatment: gradient overlay + multiply color layer */
+  .photo { position: relative; overflow: hidden; isolation: isolate; background: var(--charcoal); }
+  .photo img { width: 100%; height: 100%; object-fit: cover; transition: transform 1.2s var(--ease-out); }
+  .photo::before { content: ""; position: absolute; inset: 0; z-index: 1; background: linear-gradient(to top, rgb(30 26 24 / .62), transparent 52%); pointer-events: none; }
+  .photo::after { content: ""; position: absolute; inset: 0; z-index: 1; background: var(--tan); mix-blend-mode: multiply; opacity: .28; pointer-events: none; }
+  .photo.soft::before { background: linear-gradient(to top, rgb(30 26 24 / .18), transparent 40%); }
+  .photo figcaption {
+    position: absolute; left: 1.1rem; bottom: .95rem; z-index: 2; color: var(--paper);
+    font: italic 300 1.2rem/1.1 var(--font-display); transform: translateY(0);
+  }
+  a.photo:hover img, .photo.hoverable:hover img { transform: scale(1.05); }
+
+  /* ───────── music ───────── */
+  .music { background: var(--tan); padding-block: var(--section); position: relative; overflow: hidden; }
+  .music-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(1.25rem, 3vw, 2.5rem); }
+  .release { display: block; text-decoration: none; color: var(--night); }
+  .release .cover { position: relative; aspect-ratio: 1; box-shadow: var(--shadow-2); border-radius: 4px; overflow: hidden; transition: transform .7s var(--spring); }
+  .release .cover::after { content: ""; position: absolute; inset: 0; box-shadow: var(--shadow-3); opacity: 0; transition: opacity .5s ease; border-radius: inherit; }
+  .release .cover img { width: 100%; height: 100%; object-fit: cover; }
+  .release:hover .cover, .release:focus-visible .cover { transform: translateY(-10px) rotate(-.8deg); }
+  .release:hover .cover::after, .release:focus-visible .cover::after { opacity: 1; }
+  .release:active .cover { transform: translateY(-3px) scale(.985); transition-duration: .15s; }
+  .release h3 { font-size: clamp(1.35rem, 2.2vw, 1.9rem); line-height: 1.08; letter-spacing: -.02em; margin: 1.25rem 0 .35rem; }
+  .release .tag { font-size: .8rem; letter-spacing: .12em; text-transform: uppercase; font-weight: 600; opacity: .72; display: inline-flex; gap: .5rem; align-items: center; }
+  .release .tag .arrow { display: inline-block; transition: transform .5s var(--spring); }
+  .release:hover .tag .arrow { transform: translateX(5px); }
+  @media (min-width: 900px) {
+    .music-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); align-items: start; }
+    .music-grid > :nth-child(2) { margin-top: 5rem; }
+    .music-grid > :nth-child(3) { margin-top: 2rem; }
+    .music-grid > :nth-child(4) { margin-top: 7rem; }
+  }
+
+  /* ───────── in the room (gallery) ───────── */
+  .room { background: var(--night); color: var(--paper); padding-block: var(--section); position: relative; overflow: hidden; }
+  .room-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); grid-auto-rows: 44vw; gap: clamp(.6rem, 1.4vw, 1.1rem); }
+  .room-grid .photo { border-radius: 3px; box-shadow: var(--shadow-2); }
+  .room-grid .a { grid-column: 1 / -1; grid-row: span 1; }
+  .room-grid .b { grid-row: span 2; }
+  .room-grid .e { grid-column: 1 / -1; }
+  .room-grid .f { grid-column: 1 / -1; }
+  @media (min-width: 900px) {
+    .room-grid { grid-template-columns: repeat(12, minmax(0, 1fr)); grid-auto-rows: 7.2vw; }
+    .room-grid .a { grid-column: 1 / 8;  grid-row: 1 / 5; }
+    .room-grid .b { grid-column: 8 / 13; grid-row: 1 / 7; }
+    .room-grid .c { grid-column: 1 / 5;  grid-row: 5 / 8; }
+    .room-grid .d { grid-column: 5 / 8;  grid-row: 5 / 8; }
+    .room-grid .e { grid-column: 8 / 13; grid-row: 7 / 11; }
+    .room-grid .f { grid-column: 1 / 8;  grid-row: 8 / 11; }
+  }
+  .room-grid .photo img { transform: scale(1.001); }
+
+  /* ───────── ways we gather ───────── */
+  .ways { padding-block: var(--section); position: relative; }
+  .way {
+    position: relative; display: grid; grid-template-columns: 3rem 1fr; gap: .25rem 1rem; align-items: baseline;
+    padding-block: clamp(1.4rem, 2.6vw, 2.2rem); border-top: 1px solid rgb(68 65 65 / .22);
+    text-decoration: none; color: var(--charcoal);
+  }
+  .way:last-child { border-bottom: 1px solid rgb(68 65 65 / .22); }
+  .way .n { font-size: .78rem; font-weight: 600; letter-spacing: .12em; opacity: .6; }
+  .way .t { font: 400 clamp(2.3rem, 6vw, 5.4rem)/1 var(--font-display); letter-spacing: -.03em; transition: transform .7s var(--spring); transform-origin: left center; }
+  .way .d { grid-column: 2; max-width: 34ch; font-size: 1rem; opacity: .78; }
+  .way .go { position: absolute; right: 0; top: 50%; width: 3.2rem; height: 3.2rem; margin-top: -1.6rem; display: none; place-items: center; border-radius: 50%; background: var(--rust); color: var(--paper); transform: scale(.4) rotate(-45deg); opacity: 0; transition: transform .6s var(--spring), opacity .3s ease; }
+  .way:hover .t, .way:focus-visible .t { transform: translateX(1.2rem); }
+  .way:hover .go, .way:focus-visible .go { transform: scale(1) rotate(0); opacity: 1; }
+  .way:hover .t { color: var(--rust); }
+  .way:active .t { transform: translateX(.6rem) scale(.99); }
+  @media (min-width: 900px) {
+    .way { grid-template-columns: 5rem minmax(0, 1fr) 22rem; padding-right: 4.5rem; align-items: center; }
+    .way .d { grid-column: 3; }
+    .way .go { display: grid; }
+  }
+
+  /* ───────── CTA ───────── */
+  .cta { position: relative; isolation: isolate; overflow: hidden; color: var(--paper); padding-block: calc(var(--section) * 1.1); text-align: center; background: var(--moss-deep); }
+  .cta-media { position: absolute; inset: -8% 0; z-index: -3; }
+  .cta-media img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 60%; }
+  .cta::before { content: ""; position: absolute; inset: 0; z-index: -2; background: var(--moss); mix-blend-mode: multiply; opacity: .92; }
+  .cta::after {
+    content: ""; position: absolute; inset: 0; z-index: -1;
+    background:
+      radial-gradient(48% 46% at 50% 44%, rgb(30 26 24 / .62), rgb(30 26 24 / 0) 100%),
+      radial-gradient(60% 70% at 50% 45%, rgb(30 26 24 / 0), rgb(30 26 24 / .5) 100%),
+      radial-gradient(40% 40% at 15% 100%, rgb(150 68 27 / .45), transparent 70%),
+      radial-gradient(40% 40% at 90% 0%, rgb(201 178 146 / .25), transparent 70%),
+      linear-gradient(to top, rgb(30 26 24 / .55), transparent 55%);
+  }
+  .field { display: flex; flex-direction: column; gap: .75rem; width: min(100%, 34rem); margin-inline: auto; }
+  @media (min-width: 560px) { .field { flex-direction: row; background: rgb(250 249 246 / .12); border-radius: 999px; padding: .4rem; box-shadow: inset 0 0 0 1px rgb(250 249 246 / .35), var(--shadow-2); backdrop-filter: blur(6px); } }
+  .field input { flex: 1; min-width: 0; padding: 1rem 1.4rem; border-radius: 999px; border: 0; background: rgb(250 249 246 / .14); color: var(--paper); font: 500 1rem var(--font-body); box-shadow: inset 0 0 0 1px rgb(250 249 246 / .35); }
+  @media (min-width: 560px) { .field input { background: transparent; box-shadow: none; } }
+  .field input::placeholder { color: rgb(250 249 246 / .72); }
+  .field input:focus-visible { outline: 2px solid var(--tan); outline-offset: 2px; }
+
+  /* ───────── footer ───────── */
+  .foot { background: var(--night); color: var(--paper); padding-block: clamp(4rem, 8vw, 7rem) 2rem; }
+  .foot a:not(.btn) { color: inherit; text-decoration: none; opacity: .85; }
+  .foot a:not(.btn):hover { opacity: 1; color: var(--tan); }
+  .foot a:not(.btn):active { opacity: .6; }
+
+  /* ───────── motion: reveals (transform + opacity only) ───────── */
+  .reveal { opacity: 0; transition: opacity .9s ease var(--d, 0s), transform 1.1s var(--spring) var(--d, 0s); }
+  .reveal.up { transform: translateY(2.2rem); }
+  .reveal.left { transform: translateX(-3rem); }
+  .reveal.right { transform: translateX(3rem); }
+  .reveal.scale { transform: scale(.92) translateY(1rem); }
+  .reveal.tilt { transform: translateY(3rem) rotate(var(--r0, 0deg)); }
+  .reveal.in { opacity: 1; transform: none; }
+  .reveal.tilt.in { transform: rotate(var(--r, 0deg)); }
+
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    .reveal { opacity: 1 !important; transform: none !important; transition: none !important; }
+    .reveal.tilt { transform: rotate(var(--r, 0deg)) !important; }
+    .marquee-track { animation: none; }
+    * { transition-duration: .01ms !important; }
+  }
+</style>
+</head>
+
+<body>
+
+<!-- ═════════════ NAV ═════════════ -->
+<header class="nav" id="nav">
+  <div class="wrap nav-inner">
+    <a href="#top" class="nav-logo" aria-label="the King will come, home">
+      <img class="on-hero" src="assets/logo/horizontal-white.png" alt="the King will come">
+      <img class="on-solid" src="assets/logo/horizontal-charcoal.png" alt="" aria-hidden="true">
+    </a>
+    <nav class="nav-links" aria-label="Primary">
+      <a class="link-u" href="#heart">our heart</a>
+      <a class="link-u" href="#music">music</a>
+      <a class="link-u" href="#room">in the room</a>
+      <a class="link-u" href="#gather">ways we gather</a>
+      <a class="btn btn-rust" href="#music" style="padding:.8rem 1.35rem">listen now <span class="arrow" aria-hidden="true">→</span></a>
+    </nav>
+    <button class="burger" id="burger" aria-label="Open menu" aria-expanded="false" aria-controls="sheet"><span></span><span></span></button>
+  </div>
+</header>
+<div class="sheet" id="sheet">
+  <a href="#heart">our heart</a>
+  <a href="#music">music</a>
+  <a href="#room">in the room</a>
+  <a href="#gather">ways we gather</a>
+  <a class="btn btn-tan" href="#join" style="align-self:flex-start;margin-top:1rem">save me a seat <span class="arrow" aria-hidden="true">→</span></a>
+</div>
+
+<main id="top">
+
+<!-- ═════════════ HERO ═════════════ -->
+<section class="hero">
+  <div class="hero-media" data-parallax="0.12">
+    <img src="assets/img/hero.jpg" alt="The King will come community gathered together on a neighborhood basketball court, mountains behind them" fetchpriority="high">
+  </div>
+
+  <div class="wrap hero-copy">
+    <p class="eyebrow reveal up in-load" style="--d:.1s">a collective of songwriters, producers, musicians &amp; creatives</p>
+    <h1 class="mt-6">
+      <span class="reveal up in-load" style="--d:.25s">pull up</span>
+      <span class="reveal up in-load" style="--d:.38s">a chair.</span>
+    </h1>
+  </div>
+
+  <div class="wrap hero-foot">
+    <div class="flex flex-col gap-8 md:flex-row md:items-end md:justify-between">
+      <div class="reveal up in-load" style="--d:.6s">
+        <p class="sub hero-sub">there’s room at the table, wherever you are in the journey.</p>
+        <div class="mt-7 flex flex-wrap items-center gap-x-6 gap-y-4">
+          <a class="btn btn-rust" href="#music">listen now <span class="arrow" aria-hidden="true">→</span></a>
+          <a class="btn btn-line" href="#heart">meet the neighborhood</a>
+        </div>
+      </div>
+      <p class="hero-meta hidden md:block reveal up in-load" style="--d:.75s">
+        loving, honest, vulnerable and safe spaces, through music, content, community and live experiences.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ═════════════ MARQUEE ═════════════ -->
+<section class="marquee" aria-label="loving, honest, vulnerable, safe">
+  <div class="marquee-track" aria-hidden="true">
+    <div class="marquee-group">
+      <span>loving</span><img src="assets/logo/lily-tan.png" alt="">
+      <span>honest</span><img src="assets/logo/lily-tan.png" alt="">
+      <span>vulnerable</span><img src="assets/logo/lily-tan.png" alt="">
+      <span>safe</span><img src="assets/logo/lily-tan.png" alt="">
+    </div>
+    <div class="marquee-group">
+      <span>loving</span><img src="assets/logo/lily-tan.png" alt="">
+      <span>honest</span><img src="assets/logo/lily-tan.png" alt="">
+      <span>vulnerable</span><img src="assets/logo/lily-tan.png" alt="">
+      <span>safe</span><img src="assets/logo/lily-tan.png" alt="">
+    </div>
+  </div>
+</section>
+
+<!-- ═════════════ 001 · OUR HEART ═════════════ -->
+<section class="mission" id="heart">
+  <img class="mission-lily" src="assets/logo/lily-rust.png" alt="" aria-hidden="true">
+  <div class="wrap grid items-center gap-16 lg:grid-cols-12 lg:gap-8">
+    <div class="lg:col-span-7">
+      <p class="eyebrow reveal up">001 / our heart</p>
+      <h2 class="h-xl mt-8 reveal up" style="--d:.1s">
+        a place where anybody can connect with God, others and self.
+      </h2>
+      <p class="sub mt-8 text-2xl md:text-3xl reveal up" style="--d:.2s; max-width:24ch">
+        (including us. no matter where you are in the journey.)
+      </p>
+      <p class="mt-10 max-w-[34rem] reveal up" style="--d:.3s">
+        we’re songwriters, producers, musicians and creatives who just want to make room. room to sing, to ask questions, to show up exactly as you are. no fixing, no fast-forwarding, we listen first and start from step zero.
+      </p>
+      <div class="mt-10 reveal up" style="--d:.4s">
+        <a class="link-u" href="#gather">see how we gather <span aria-hidden="true">→</span></a>
+      </div>
+    </div>
+
+    <div class="relative lg:col-span-5 lg:col-start-8 pb-16 lg:pb-24">
+      <figure class="print reveal tilt" style="--r0:6deg; --r:2.4deg; --d:.15s; transform-origin: 50% 90%;">
+        <div class="photo soft hoverable"><img src="assets/img/welcome.jpg" alt="Friends and family of the King will come bunched together for a candid group photo, arms around each other" style="aspect-ratio:4/3"></div>
+        <figcaption>come as you are.</figcaption>
+      </figure>
+      <figure class="print reveal tilt" style="--r0:-9deg; --r:-5deg; --d:.3s; width:46%; position:absolute; right:-2%; bottom:-2%;">
+        <div class="photo soft hoverable"><img src="assets/img/lily-glow.jpg" alt="Two friends embracing in front of a glowing lily-shaped light" style="aspect-ratio:3/4"></div>
+        <figcaption style="font-size:.9rem">held.</figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<!-- ═════════════ 002 · MUSIC ═════════════ -->
+<section class="music" id="music">
+  <div class="wrap">
+    <div class="grid gap-8 lg:grid-cols-12 lg:items-end mb-16 lg:mb-24">
+      <div class="lg:col-span-7">
+        <p class="eyebrow reveal left" style="color:var(--night)">002 / music</p>
+        <h2 class="h-xl mt-8 reveal left" style="--d:.1s; color:var(--night)">songs from the kitchen table.</h2>
+      </div>
+      <p class="sub text-2xl md:text-3xl lg:col-span-4 lg:col-start-9 reveal left" style="--d:.2s; color:var(--night); line-height:1.25">
+        written, sung and recorded around one table. come sit in.
+      </p>
+    </div>
+
+    <div class="music-grid">
+      <a class="release reveal scale" href="#" style="--d:.0s">
+        <div class="cover"><img src="assets/img/kyb.jpg" alt="Album artwork for know You better: a man in profile, gazing upward in warm window light" loading="lazy"></div>
+        <h3 class="display">know You better</h3>
+        <span class="tag">listen <span class="arrow" aria-hidden="true">→</span></span>
+      </a>
+      <a class="release reveal scale" href="#" style="--d:.12s">
+        <div class="cover"><img src="assets/img/kyb-live.jpg" alt="Album artwork for know You better, live from the kitchen table: musicians seated around a table in a warm studio" loading="lazy"></div>
+        <h3 class="display">know You better <span class="sub">(live from the kitchen table)</span></h3>
+        <span class="tag">listen <span class="arrow" aria-hidden="true">→</span></span>
+      </a>
+      <a class="release reveal scale" href="#" style="--d:.24s">
+        <div class="cover"><img src="assets/img/yet.jpg" alt="Album artwork for yet (don’t give up): a blurred child in motion, softly lit" loading="lazy"></div>
+        <h3 class="display">yet <span class="sub">(don’t give up)</span></h3>
+        <span class="tag">listen <span class="arrow" aria-hidden="true">→</span></span>
+      </a>
+      <a class="release reveal scale" href="#" style="--d:.36s">
+        <div class="cover"><img src="assets/img/yet-live.jpg" alt="Album artwork for yet (don’t give up), live from the kitchen table: musicians seated around a table in a warm studio" loading="lazy"></div>
+        <h3 class="display">yet <span class="sub">(don’t give up)<br>live from the kitchen table</span></h3>
+        <span class="tag">listen <span class="arrow" aria-hidden="true">→</span></span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ═════════════ 003 · IN THE ROOM ═════════════ -->
+<section class="room on-dark" id="room">
+  <div class="wrap">
+    <div class="grid gap-8 lg:grid-cols-12 lg:items-end mb-14 lg:mb-20">
+      <div class="lg:col-span-8">
+        <p class="eyebrow reveal up" style="color:var(--tan)">003 / in the room</p>
+        <h2 class="h-xl mt-8 reveal up" style="--d:.1s">like photos of your best friends.</h2>
+      </div>
+      <p class="sub text-2xl lg:col-span-4 reveal up" style="--d:.2s; color:var(--tan); line-height:1.3">
+        the camera’s part of the family here. you’re not watching from outside, you’re in the room.
+      </p>
+    </div>
+
+    <div class="room-grid">
+      <figure class="photo hoverable a reveal scale"><img src="assets/img/kitchen-table.jpg" alt="Musicians in matching denim gathered around a kitchen table in a warm studio, singing together" loading="lazy"><figcaption>around the table</figcaption></figure>
+      <figure class="photo hoverable b reveal scale" style="--d:.1s"><img src="assets/img/laughing.jpg" alt="A woman laughing warmly in the middle of a crowd" loading="lazy" style="object-position:50% 30%"><figcaption>belly laughs included</figcaption></figure>
+      <figure class="photo hoverable c reveal scale" style="--d:.05s"><img src="assets/img/songwriting.jpg" alt="Songwriters with acoustic guitar and an upright piano in a cozy room" loading="lazy"><figcaption>writing room</figcaption></figure>
+      <figure class="photo hoverable d reveal scale" style="--d:.15s"><img src="assets/img/singers.jpg" alt="A singer and guitarist sharing a microphone, mid-song" loading="lazy" style="object-position:40% 40%"><figcaption>harmony check</figcaption></figure>
+      <figure class="photo hoverable e reveal scale" style="--d:.1s"><img src="assets/img/string-lights.jpg" alt="People dancing and worshiping under string lights" loading="lazy"><figcaption>lights on</figcaption></figure>
+      <figure class="photo hoverable f reveal scale" style="--d:.05s"><img src="assets/img/candlelit.jpg" alt="A packed, candlelit room with the band seated in the middle of the crowd" loading="lazy" style="object-position:50% 55%"><figcaption>one big circle</figcaption></figure>
+    </div>
+  </div>
+</section>
+
+<!-- ═════════════ 004 · WAYS WE GATHER ═════════════ -->
+<section class="ways" id="gather">
+  <div class="wrap">
+    <div class="grid gap-8 lg:grid-cols-12 lg:items-end mb-14 lg:mb-20">
+      <div class="lg:col-span-8">
+        <p class="eyebrow reveal right">004 / ways we gather</p>
+        <h2 class="h-xl mt-8 reveal right" style="--d:.1s">more than a song, a whole neighborhood.</h2>
+      </div>
+      <p class="sub text-2xl lg:col-span-4 reveal right" style="--d:.2s; line-height:1.3">
+        pick a doorway. they all lead to the same table.
+      </p>
+    </div>
+
+    <div role="list">
+      <a class="way reveal up" role="listitem" href="#music" style="--d:0s"><span class="n">01</span><span class="t">music</span><span class="d">songs to sing, to cry to, and to do the dishes to.</span><span class="go" aria-hidden="true">→</span></a>
+      <a class="way reveal up" role="listitem" href="#room" style="--d:.06s"><span class="n">02</span><span class="t">content</span><span class="d">stories from the neighborhood, shot like home videos.</span><span class="go" aria-hidden="true">→</span></a>
+      <a class="way reveal up" role="listitem" href="#" style="--d:.12s"><span class="n">03</span><span class="t">podcasts</span><span class="d">conversations where listening comes first.</span><span class="go" aria-hidden="true">→</span></a>
+      <a class="way reveal up" role="listitem" href="#" style="--d:.18s"><span class="n">04</span><span class="t">merch &amp; apparel</span><span class="d">wear the neighborhood. it fits everybody.</span><span class="go" aria-hidden="true">→</span></a>
+      <a class="way reveal up" role="listitem" href="#join" style="--d:.24s"><span class="n">05</span><span class="t">community</span><span class="d">a table with more chairs than you’d expect.</span><span class="go" aria-hidden="true">→</span></a>
+      <a class="way reveal up" role="listitem" href="#" style="--d:.3s"><span class="n">06</span><span class="t">live experiences</span><span class="d">in the room, together, voices and all.</span><span class="go" aria-hidden="true">→</span></a>
+    </div>
+  </div>
+</section>
+
+<!-- ═════════════ JOIN ═════════════ -->
+<section class="cta on-dark" id="join">
+  <div class="cta-media" data-parallax="0.1"><img src="assets/img/group-warehouse.jpg" alt="" loading="lazy"></div>
+  <div class="wrap relative">
+    <p class="eyebrow reveal up" style="color:var(--tan)">005 / join us</p>
+    <h2 class="h-xl mt-8 reveal up" style="--d:.1s; font-size:clamp(3rem, 9vw, 8.5rem); line-height:.92; text-shadow:0 2px 40px rgb(30 26 24 / .4)">there’s always<br>room at the table.</h2>
+    <p class="sub mx-auto mt-8 text-2xl md:text-3xl reveal up" style="--d:.2s; max-width:26ch; line-height:1.3">no pressure, no prerequisites. just step zero.</p>
+
+    <form class="field mt-12 reveal up" id="joinForm" style="--d:.3s" novalidate>
+      <label for="email" class="sr-only">email address</label>
+      <input id="email" name="email" type="email" inputmode="email" autocomplete="email" placeholder="your email" required>
+      <button class="btn btn-tan" type="submit">save me a seat <span class="arrow" aria-hidden="true">→</span></button>
+    </form>
+    <p id="formNote" class="mt-5 text-sm opacity-80" role="status" aria-live="polite">we’ll only send the good stuff. promise.</p>
+  </div>
+</section>
+
+</main>
+
+<!-- ═════════════ FOOTER ═════════════ -->
+<footer class="foot">
+  <div class="wrap">
+    <div class="grid gap-12 md:grid-cols-12">
+      <div class="md:col-span-5">
+        <img src="assets/logo/stacked-tan.png" alt="the King will come" style="width:min(20rem, 80%); height:auto">
+        <p class="sub mt-8 text-xl" style="color:var(--tan); max-width:26ch; line-height:1.3">loving, honest, vulnerable and safe. for everyone.</p>
+      </div>
+      <nav class="md:col-span-3 md:col-start-8 flex flex-col gap-3" aria-label="Footer">
+        <span class="eyebrow mb-2" style="color:var(--tan)">explore</span>
+        <a href="#heart">our heart</a>
+        <a href="#music">music</a>
+        <a href="#room">in the room</a>
+        <a href="#gather">ways we gather</a>
+      </nav>
+      <nav class="md:col-span-2 flex flex-col gap-3" aria-label="Social">
+        <span class="eyebrow mb-2" style="color:var(--tan)">find us</span>
+        <a href="#">youtube</a>
+        <a href="#">instagram</a>
+        <a href="#">spotify</a>
+        <a href="#">apple music</a>
+      </nav>
+    </div>
+    <div class="mt-16 pt-6 flex flex-col gap-2 text-sm opacity-70 sm:flex-row sm:justify-between" style="border-top:1px solid rgb(250 249 246 / .16)">
+      <span>© <span id="year">2026</span> the King will come</span>
+      <span class="sub">made with the neighborhood in mind.</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+(() => {
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const nav = document.getElementById('nav');
+  const burger = document.getElementById('burger');
+  const sheet = document.getElementById('sheet');
+
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  /* reveals */
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, { threshold: 0.12, rootMargin: '0px 0px -6% 0px' });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+  /* nav: solid after hero start */
+  const onScroll = () => nav.classList.toggle('is-solid', scrollY > 60);
+  addEventListener('scroll', onScroll, { passive: true }); onScroll();
+
+  /* mobile menu */
+  const setMenu = (open) => {
+    nav.classList.toggle('menu-open', open);
+    sheet.classList.toggle('open', open);
+    burger.setAttribute('aria-expanded', open);
+    burger.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+    document.body.style.overflow = open ? 'hidden' : '';
+  };
+  burger.addEventListener('click', () => setMenu(!sheet.classList.contains('open')));
+  sheet.querySelectorAll('a').forEach(a => a.addEventListener('click', () => setMenu(false)));
+  addEventListener('keydown', e => { if (e.key === 'Escape') setMenu(false); });
+
+  /* gentle parallax (transform only) */
+  if (!reduce) {
+    const els = [...document.querySelectorAll('[data-parallax]')];
+    let ticking = false;
+    const update = () => {
+      const vh = innerHeight;
+      els.forEach(el => {
+        const r = el.parentElement.getBoundingClientRect();
+        if (r.bottom < -100 || r.top > vh + 100) return;
+        const k = parseFloat(el.dataset.parallax) || 0.1;
+        const offset = (r.top + r.height / 2 - vh / 2) * -k;
+        el.style.transform = `translate3d(0, ${offset.toFixed(1)}px, 0)`;
+      });
+      ticking = false;
+    };
+    addEventListener('scroll', () => { if (!ticking) { ticking = true; requestAnimationFrame(update); } }, { passive: true });
+    addEventListener('resize', update); update();
+  }
+
+  /* join form: front-end only demo (wire to your email provider before launch) */
+  const form = document.getElementById('joinForm');
+  const note = document.getElementById('formNote');
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const input = form.elements.email;
+    if (!input.value || !input.checkValidity()) {
+      note.textContent = 'hmm, that email doesn’t look quite right. mind checking it?';
+      input.focus(); return;
+    }
+    note.textContent = 'you’re in. we saved you a seat.';
+    form.reset();
+  });
+})();
+</script>
+</body>
+</html>
